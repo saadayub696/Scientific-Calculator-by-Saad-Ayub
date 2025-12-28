@@ -5,6 +5,7 @@ let historyList = document.getElementById('history-list');
 
 let string = "";
 
+// Helper: Add entries to history popup
 function addToHistory(exp, res) {
     let div = document.createElement('div');
     div.classList.add('history-item');
@@ -14,18 +15,18 @@ function addToHistory(exp, res) {
 
 Array.from(buttons).forEach(button => {
     button.addEventListener('click', (e) => {
-        let btnText = e.target.innerHTML;
+        let btnText = e.target.innerText;
 
-        
+        // 1. System Button Logic
         if (btnText === 'H') {
             historyOverlay.classList.remove('hidden');
             return;
         }
         if (btnText === 'Clear History' || btnText === '×') {
-            return; 
+            return; // Ignore these for math string
         }
 
-
+        // 2. Math Logic
         if(btnText == '='){
             try {
                 let expression = string;
@@ -42,7 +43,7 @@ Array.from(buttons).forEach(button => {
             input.value = string;
         }
         else if(btnText == 'DEL'){
-            string = string.toString().substring(0, string.length - 1);
+            string = string.toString().slice(0, -1);
             input.value = string;
         }
         else if(['sin', 'cos', 'tan', '√'].includes(btnText)){
@@ -67,6 +68,7 @@ Array.from(buttons).forEach(button => {
     })
 });
 
+// History Popup Controls
 document.getElementById('close-history').addEventListener('click', () => {
     historyOverlay.classList.add('hidden');
 });
